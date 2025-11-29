@@ -1,4 +1,4 @@
-package com.example.springBoot_ecommerce_backend.controllers;
+package com.example.springBoot_ecommerce_backend.domains;
 
 import java.sql.Blob;
 

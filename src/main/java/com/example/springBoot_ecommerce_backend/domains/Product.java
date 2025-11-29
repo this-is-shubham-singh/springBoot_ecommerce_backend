@@ -1,8 +1,7 @@
-package com.example.springBoot_ecommerce_backend.controllers;
+package com.example.springBoot_ecommerce_backend.domains;
 
 import java.util.List;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
