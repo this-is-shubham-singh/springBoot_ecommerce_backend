@@ -10,4 +10,5 @@ import com.example.springBoot_ecommerce_backend.domains.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long>  {
     Optional<Category> findByName(String name);
+    
 }
