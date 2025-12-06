@@ -10,6 +10,6 @@ public interface CategoryInterface {
     public Category getCategoryByName(String name);
     public List<Category> getAllCategories();
     public String addCategory(String categoryName);
-    public CategoryDto updateCategory(String categoryName, Long id);
+    public CategoryDto updateCategory(CategoryDto categoryDto);
     public String deleteCategoryById(Long id);
 }

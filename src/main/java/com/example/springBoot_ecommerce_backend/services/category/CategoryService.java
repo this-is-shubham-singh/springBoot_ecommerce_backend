@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoryService implements CategoryInterface {
 
-    public CategoryRepository categoryRepository;
+    public final CategoryRepository categoryRepository;
 
     @Override
     public Category getCategoryById(Long id) {
@@ -52,18 +52,18 @@ public class CategoryService implements CategoryInterface {
     }
 
     @Override
-    public CategoryDto updateCategory(String categoryName, Long id) {
+    public CategoryDto updateCategory(CategoryDto categoryDto) {
 
-        Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category dosen't exist"));
+        Category existingCategory = categoryRepository.findById(categoryDto.getId()).orElseThrow(() -> new ResourceNotFoundException("category dosen't exist"));
 
-        existingCategory.setName(categoryName);
+        existingCategory.setName(categoryDto.getCategoryName());
         categoryRepository.save(existingCategory);
 
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setId(existingCategory.getId());
-        categoryDto.setCategoryName(existingCategory.getName());
+        CategoryDto newCategoryDto = new CategoryDto();
+        newCategoryDto.setId(existingCategory.getId());
+        newCategoryDto.setCategoryName(existingCategory.getName());
 
-        return categoryDto;
+        return newCategoryDto;
     }
 
     @Override
