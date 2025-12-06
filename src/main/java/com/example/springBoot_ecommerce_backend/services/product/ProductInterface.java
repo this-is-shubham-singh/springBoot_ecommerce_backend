@@ -12,7 +12,7 @@ public interface ProductInterface {
     public List<ProductDto> getProductByCategory(String categoryName);
     public List<ProductDto> getProductByBrand(String brandName);
     public List<ProductDto> getProductByCategoryAndBrand(String categoryName, String brandName);
-    public ProductDto getProductByName(String productName);
-    public ProductDto getProductByBrandAndName(String brandName, String prodctName);
+    public List<ProductDto> getProductByName(String productName);
+    public ProductDto getProductByBrandAndName(String brandName, String productName);
     public int countProductByBrandAndName(String brandName, String productName);
 }

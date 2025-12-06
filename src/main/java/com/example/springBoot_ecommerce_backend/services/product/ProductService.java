@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService implements ProductInterface {
 
-    CategoryRepository categoryRepository;
-    private ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {
@@ -110,6 +110,8 @@ public class ProductService implements ProductInterface {
             product.setInventory(productDto.getInventory());
         }
 
+        productRepository.save(product);
+
         ProductDto newProductDto = new ProductDto();
         newProductDto.setName(product.getName());
         newProductDto.setDescription(product.getDescription());
@@ -187,18 +189,10 @@ public class ProductService implements ProductInterface {
     }
 
     @Override
-    public ProductDto getProductByName(String productName) {
-        Product product = productRepository.findByName(productName).orElseThrow(() -> new ResourceNotFoundException("product not found"));
-   
-        ProductDto productDto = new ProductDto();
-        productDto.setName(product.getName());
-        productDto.setDescription(product.getDescription());
-        productDto.setPrice(product.getPrice());
-        productDto.setCategoryId(product.getCategory().getId());
-        productDto.setBrandName(product.getBrand());
-        productDto.setInventory(product.getInventory());
+    public List<ProductDto> getProductByName(String productName) {
 
-        return productDto;
+        List<Product> products = productRepository.findByName(productName);
+        return mapProductToDto(products);
     }
 
     @Override
