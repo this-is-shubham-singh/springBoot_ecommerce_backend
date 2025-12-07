@@ -4,7 +4,6 @@ import java.util.List;
 
 import java.sql.Blob;
 
-import javax.management.RuntimeErrorException;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.stereotype.Service;
@@ -23,20 +22,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ImageService implements ImageInterface {
 
-    private ImageRepository imageRepository;
-    private ProductRepository productRepository;
+    private final ImageRepository imageRepository;
+    private final ProductRepository productRepository;
 
     @Override
-    public ImageDto getImageById(Long id) {
+    public Image getImageById(Long id) {
 
-        Image img = imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("image not found"));
-
-        ImageDto imageDto = new ImageDto();
-        imageDto.setFileName(img.getFileName());
-        imageDto.setFileType(img.getFileType());
-        imageDto.setDownloadUrl(img.getDownloadUrl());
-
-        return imageDto;
+        return imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("image not found"));
     }
 
     @Override
@@ -56,6 +48,7 @@ public class ImageService implements ImageInterface {
 
     String mapMultipartfileToImages(List<MultipartFile> files, Long ProductId) {
 
+        
         Product product = productRepository.findById(ProductId).orElseThrow(() -> new ResourceNotFoundException("product not found"));
         
         for(MultipartFile file: files) {
@@ -78,7 +71,10 @@ public class ImageService implements ImageInterface {
             image = imageRepository.save(image);
             
             String url = "api/images/" + image.getId();
+
             image.setDownloadUrl(url);
+
+            imageRepository.save(image);
 
         }
 
