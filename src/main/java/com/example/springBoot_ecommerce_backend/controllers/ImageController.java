@@ -34,8 +34,8 @@ public class ImageController {
 
     private final ImageInterface imageInterface;
 
-    @PostMapping("/saveImages/{productId}")
-    public ResponseEntity<ApiResponse> saveImages(@RequestParam("images") List<MultipartFile> files, @PathVariable Long productId) {
+    @PostMapping("/saveImages")
+    public ResponseEntity<ApiResponse> saveImages(@RequestParam("images") List<MultipartFile> files, @RequestParam Long productId) {
 
         String response = imageInterface.saveImages(files, productId);
         return ResponseEntity.ok(new ApiResponse("images saved", response));

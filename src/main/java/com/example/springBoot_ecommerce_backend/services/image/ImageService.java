@@ -48,28 +48,27 @@ public class ImageService implements ImageInterface {
 
     String mapMultipartfileToImages(List<MultipartFile> files, Long ProductId) {
 
-        
-        Product product = productRepository.findById(ProductId).orElseThrow(() -> new ResourceNotFoundException("product not found"));
-        
-        for(MultipartFile file: files) {
-            
+        Product product = productRepository.findById(ProductId)
+                .orElseThrow(() -> new ResourceNotFoundException("product not found"));
+
+        for (MultipartFile file : files) {
+
             Image image = new Image();
             image.setFileName(file.getOriginalFilename());
             image.setFileType(file.getContentType());
             image.setProduct(product);
-            
+
             try {
 
                 byte[] bytes = file.getBytes();
                 Blob blob = new SerialBlob(bytes);
                 image.setImg(blob);
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 throw new RuntimeException("failed to create blob");
             }
 
             image = imageRepository.save(image);
-            
+
             String url = "api/images/" + image.getId();
 
             image.setDownloadUrl(url);
@@ -84,19 +83,19 @@ public class ImageService implements ImageInterface {
 
     @Override
     public ImageDto updateImage(MultipartFile file, Long imageId) {
-        
-        Image image = imageRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("image not found"));
+
+        Image image = imageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("image not found"));
 
         image.setFileType(file.getContentType());
         image.setFileName(file.getOriginalFilename());
-        
+
         try {
 
             byte[] bytes = file.getBytes();
             Blob blob = new SerialBlob(bytes);
             image.setImg(blob);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("failed to create a blob");
         }
 
