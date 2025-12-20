@@ -28,15 +28,16 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
 
+    // on adding, setting parent is required 
     public void addCartItem(CartItem cartItem) {
         cartItem.setCart(this);
         this.getCartItems().add(cartItem);
         updateTotalPrice();
     }
 
+    // on removing, removing parent is not required 
     public void removeCartItem(CartItem cartItem) {
         cartItem.setCart(null);
-        this.getCartItems().remove(cartItem);
         updateTotalPrice();
     }
 

@@ -1,5 +1,6 @@
 package com.example.springBoot_ecommerce_backend.domains;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class Product {
     private String name;
     private String brand;
     private String description;
-    private Double price;
+    private BigDecimal price;
     private int inventory;
     
 

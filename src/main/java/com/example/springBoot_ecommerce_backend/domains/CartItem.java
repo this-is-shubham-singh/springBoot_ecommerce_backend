@@ -20,7 +20,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
-
+    
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
 
@@ -30,7 +30,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    Cart cart;
+    private Cart cart;
 
     public void updateTotalPrice() {
         this.setTotalPrice(BigDecimal.valueOf(this.getQuantity()).multiply(this.getUnitPrice()));
